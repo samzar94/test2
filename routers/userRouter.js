@@ -1,5 +1,5 @@
 import express from 'express'
-import data from '../data.js'
+// import data from '../data.js'
 import expressAsyncHandler from 'express-async-handler'
 import bcrypt from 'bcryptjs'
 import User from '../models/userModel.js'
@@ -17,14 +17,14 @@ userRouter.get(
   }),
 )
 
-userRouter.get(
-  '/seed',
-  expressAsyncHandler(async (req, res) => {
-    // await User.remove({});
-    const createdUsers = await User.insertMany(data.users)
-    res.send({ createdUsers })
-  }),
-)
+// userRouter.get(
+//   '/seed',
+//   expressAsyncHandler(async (req, res) => {
+//     // await User.remove({});
+//     const createdUsers = await User.insertMany(data.users)
+//     res.send({ createdUsers })
+//   }),
+// )
 
 userRouter.post(
   '/signin',
