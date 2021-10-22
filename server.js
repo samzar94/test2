@@ -26,10 +26,6 @@ mongoose.connect(process.env.MONGODB_URL),
 const __dirname = path.resolve()
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
-app.use(express.static(path.join(__dirname, '/frontend/build')))
-app.get('*', (req, res) =>
-  res.sendFile(path.join(__dirname, '/frontend/build/index.html')),
-)
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/orders', orderRouter)
@@ -48,11 +44,6 @@ app.use((err, req, res, next) => {
 })
 const port = process.env.PORT || 5000
 
-const httpServer = http.Server(app)
-const io = new Server(httpServer, { cors: { origin: '*' } })
-httpServer.listen(port, () => {
-  console.log(`Serve at http://localhost:${port}`)
+app.listen(port, () => {
+  console.log(`server at http: localhost:${port}`)
 })
-// app.listen(port, () => {
-//   console.log(`server at http:localhost:${port}`)
-// })
