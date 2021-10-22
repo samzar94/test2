@@ -17,8 +17,19 @@ app.use(express.json()) //para convertir el body de una peticion a json
 app.use(express.urlencoded({ extended: true }))
 // 'mongodb://localhost/amazona', {}
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/amazona')
+mongoose.connect(process.env.MONGODB_URL),
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  } //'mongodb://localhost/amazona'
+const __dirname = path.resolve()
 
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+app.use(express.static(path.join(__dirname, '/frontend/build')))
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html')),
+)
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
 app.use('/api/orders', orderRouter)
@@ -30,7 +41,6 @@ app.get('/api/config/paypal', (req, res) => {
 app.get('/', (req, res) => {
   res.send('server is ready')
 })
-const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 app.use((err, req, res, next) => {
