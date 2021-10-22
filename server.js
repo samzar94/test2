@@ -17,7 +17,7 @@ app.use(express.json()) //para convertir el body de una peticion a json
 app.use(express.urlencoded({ extended: true }))
 // 'mongodb://localhost/amazona', {}
 
-mongoose.connect(process.env.MONGODB || 'mongodb://localhost/amazona')
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/amazona')
 
 app.use('/api/users', userRouter)
 app.use('/api/products', productRouter)
